@@ -21,7 +21,9 @@ export default function Repositories({ repos_url }) {
       <h2 className="repos-title">Meus repositórios públicos</h2>
       <div className="repos-container">
         {repos
-          .filter((repo) => repo.name != repo.owner.login)
+          .filter((repo) => {
+            repo.name != repo.owner.login && !repo.fork;
+          })
           .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
           .map((repo) => {
             return (

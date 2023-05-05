@@ -22,7 +22,7 @@ export default function Repositories({ repos_url }) {
       <div className="repos-container">
         {repos
           .filter((repo) => {
-            repo.name != repo.owner.login && !repo.fork;
+            repo.name != repo.owner.login || !repo.fork;
           })
           .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
           .map((repo) => {

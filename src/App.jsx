@@ -5,6 +5,8 @@ import Presentation from "./components/Presentation/Presentation.jsx";
 import Repositories from "./components/Repositories/Repositories.jsx";
 import MainProject from "./components/MainProject/MainProject.jsx";
 
+import logo from "../assets/logo.png";
+
 import "./App.css";
 
 function App() {
@@ -24,7 +26,7 @@ function App() {
     data && (
       <>
         {/* <HeaderBar name={data.name} /> */}
-        <img src="../assets/logo.png" id="logo" />
+        <img src={logo} id="logo" />
         <Presentation
           avatar_url={data.avatar_url}
           location={data.location}

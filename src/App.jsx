@@ -17,7 +17,6 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setData(data);
-        console.log(data);
       })
       .catch((error) => console.log(error));
   }, []);

@@ -11,7 +11,6 @@ export default function Repositories({ repos_url }) {
       .then((response) => response.json())
       .then((data) => {
         setRepos(data);
-        console.log(data);
       })
       .catch((error) => console.log(error));
   }, [repos_url]);

@@ -1,0 +1,21 @@
+header {
+  background-color: var(--dark-gray);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+}
+
+header img {
+  width: 40px;
+}
+
+header h2 {
+  text-shadow: -3px 3px 3px #00000055;
+}

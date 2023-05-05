@@ -1,24 +1,43 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+
+// import HeaderBar from "./components/HeaderBar/HeaderBar";
+import Presentation from "./components/Presentation/Presentation.jsx";
+import Repositories from "./components/Repositories/Repositories.jsx";
+import MainProject from "./components/MainProject/MainProject.jsx";
+
+import "./App.css";
 
 function App() {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    fetch("https://api.github.com/users/Lucashcr")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <p>Choo Choo! This is an example of a Vite + React app running on Railway.</p>
-      </div>
-    </>
-  )
+    data && (
+      <>
+        {/* <HeaderBar name={data.name} /> */}
+        <img src="../assets/logo.png" id="logo" />
+        <Presentation
+          avatar_url={data.avatar_url}
+          location={data.location}
+          name={data.name}
+          bio={data.bio}
+          created_at={data.created_at}
+          html_url={data.html_url}
+        />
+        <MainProject />
+        <Repositories repos_url={data.repos_url} />
+      </>
+    )
+  );
 }
 
-export default App
+export default App;

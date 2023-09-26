@@ -3,21 +3,51 @@ import PropTypes from "prop-types";
 
 import "./Repositories.css";
 
+const MICROSECONDS_IN_A_MONTH = 1000 * 60 * 60 * 24 * 30;
+
 export default function Repositories({ repos_url }) {
   const [repos, setRepos] = useState([]);
+  const [allRepos, setAllRepos] = useState([]);
+  const [months, setMonths] = useState(1);
 
   useEffect(() => {
     fetch(repos_url)
       .then((response) => response.json())
       .then((data) => {
-        setRepos(data);
+        setAllRepos(data);
       })
       .catch((error) => console.log(error));
   }, [repos_url]);
 
+  useEffect(() => {
+    setRepos(
+      allRepos.filter(
+        (repo) =>
+          Date.now() - Date.parse(repo.updated_at) <
+          MICROSECONDS_IN_A_MONTH * months
+      )
+    );
+  }, [months, allRepos]);
+
   return (
     <section className="repos-section">
       <h2 className="repos-title">Meus repositórios públicos</h2>
+      <div className="repos-filter-updated-at">
+        <label htmlFor="range">Filtro por data de atualização:</label>
+        <input
+          type="range"
+          id="range"
+          min="1"
+          max="12"
+          step="1"
+          onChange={(event) => {
+            setMonths(event.target.value);
+          }}
+        />
+        <span>
+          {months == 1 ? <p>Último mês</p> : <p>Últimos {months} meses</p>}
+        </span>
+      </div>
       <div className="repos-container">
         {repos
           .filter((repo) => repo.name != repo.owner.login && !repo.fork)
